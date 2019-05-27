@@ -51,76 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        findViewById(R.id.toggleBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggle();
-            }
-        });
-    }
-
-    private void toggle2() {
-        new AsyncTask<Object, Object, Object>() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                try {
-                    String uri = "https://cloud-de.yeelight.com/thirdparty/yeelight-android/control_old_devices";
-                    String body = "{\"accesstoken\":\"V3_t40uFZs3JIDDhsD1vLLk8-3HgCOIhdz41nFxsokf04vikPRfdXYtMVMtnJH4kIyMNsDbNShHhW72ILfKURnknoQnhEZDaPq_XMWhmibSWDieqdCvBEqzD6Su2eqN5RDT\",\"bundleData\":[{\"did\":\"131154189\",\"command\":{\"method\":\"toggle\",\"params\":[]}}]}";
-                    /*TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
-                        @Override
-                        public boolean isTrusted(X509Certificate[] cert, String authType) throws CertificateException {
-                            return true;
-                        }
-                    };
-                    SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
-                    SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
-
-                    Registry<ConnectionSocketFactory> socketFactoryRegistry =
-                            RegistryBuilder.<ConnectionSocketFactory>create()
-                                    .register("https", sslsf)
-                                    .register("http", new PlainConnectionSocketFactory())
-                                    .build();
-
-                    BasicHttpClientConnectionManager connectionManager =
-                            new BasicHttpClientConnectionManager(socketFactoryRegistry);
-                    CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
-                            .setConnectionManager(connectionManager).build();*/
-
-                    URL url = new URL(uri);
-                    HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                    httpsURLConnection.setRequestMethod("POST");
-                    httpsURLConnection.setDoOutput(true);
-                    BufferedOutputStream out = new BufferedOutputStream(httpsURLConnection.getOutputStream());
-
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-                    writer.write(body);
-
-                    writer.flush();
-                    writer.close();
-                    out.close();
-
-                    try {
-                        httpsURLConnection.connect();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    return null;
-
-                    /*HttpPost post = new HttpPost(uri);
-
-                    StringEntity entity = new StringEntity(body);
-                    post.setEntity(entity);
-                    HttpResponse resp = httpClient.execute(post);
-                    httpClient.execute(HttpRequest)
-                    return EntityUtils.toString(resp.getEntity());*/
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }.execute();
+        toggle();
     }
 
 
@@ -204,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle("Battery percentage")
+                .setContentTitle("YeeToggler")
                 .setContentText(notif + "")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(Notification.CATEGORY_MESSAGE)
@@ -228,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 notificationManager.cancel(notId);
+                finish();
                 return null;
             }
         }.execute();

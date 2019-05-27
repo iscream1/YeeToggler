@@ -6,10 +6,4 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/toggle"
-        android:id="@+id/toggleBtn"/>
-
 </android.support.constraint.ConstraintLayout>
